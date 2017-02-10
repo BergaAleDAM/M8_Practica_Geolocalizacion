@@ -1,5 +1,4 @@
 package com.example.alumnedam.practica_geolocalizacion;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -31,30 +30,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        EditText matri = (EditText) findViewById(R.id.matri);
-        EditText user = (EditText) findViewById(R.id.user);
-        String usuario = user.toString();
-        String matricula = matri.toString();
 
 
-        BaseDatos bd = new BaseDatos(this, "Autobuseros", null, 2);
-        SQLiteDatabase sql= bd.getWritableDatabase();
-        //String dades = matricula;
-        String[] dades =  {usuario};
-        Cursor c = sql.rawQuery("SELECT * FROM Otobuses WHERE id_bus != ? ", new String[]{usuario});
+        switch (view.getId()) {
+            case R.id.acceder:
+                String[] dades = declararVariables();
+                BaseDatos bd = new BaseDatos(this, "Autobuseros", null, 2);
+                SQLiteDatabase sql= bd.getWritableDatabase();
 
-        if (c.moveToFirst()) {
-            do {
+                Cursor c = sql.rawQuery("SELECT * FROM Otobuses WHERE ? != id_bus AND ? != contrasena", dades);
 
-                Toast toast1 =
-                        Toast.makeText(getApplicationContext(),
-                                (c.getString(0) + " - " + c.getString(1)), Toast.LENGTH_SHORT);
+                if (c.moveToFirst()) {
+                    do {
 
-                toast1.show();
+                        Toast toast1 =
+                                Toast.makeText(getApplicationContext(),
+                                        (c.getString(0) + " - " + c.getString(1)), Toast.LENGTH_SHORT);
+
+                        toast1.show();
 
 
 
-            } while (c.moveToNext());
+                    } while (c.moveToNext());
+                }
+
+
+
+
         }
 
 
@@ -64,5 +66,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+
+
+
+
+
+    }
+
+    private String[] declararVariables() {
+
+        EditText matri = (EditText) findViewById(R.id.matri);
+        EditText user = (EditText) findViewById(R.id.user);
+        String usuario = user.toString();
+        String matricula = matri.toString();
+
+        return  new String[] {usuario, matricula};
     }
 }

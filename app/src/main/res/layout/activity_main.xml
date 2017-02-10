@@ -67,6 +67,7 @@
         android:id="@+id/matri"
         android:layout_marginBottom="60dp"
         android:layout_above="@+id/acceder"
-        android:layout_alignStart="@+id/tvmatri" />
+        android:layout_alignStart="@+id/tvmatri"
+        android:layout_alignEnd="@+id/user" />
 
 </RelativeLayout>

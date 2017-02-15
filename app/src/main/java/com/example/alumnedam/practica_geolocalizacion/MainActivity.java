@@ -43,11 +43,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (c.moveToFirst()) {
                     do {
 
-                        Toast toast1 =
-                                Toast.makeText(getApplicationContext(),
-                                        (c.getString(0) + " - " + c.getString(1)), Toast.LENGTH_SHORT);
+                        if(c.getString(0).equals(dades[0]) && c.getString(1).equals(dades[1])){
 
-                        toast1.show();
+                            Toast loginbien =
+                                    Toast.makeText(getApplicationContext(),("Accés correcte al serveo"), Toast.LENGTH_SHORT);
+
+                            loginbien.show();
+
+                            Intent i = new Intent(getApplicationContext(), GeoLocalizacion.class);
+                            i.putExtra(dades[0], dades[1]);
+                            startService(i);
+
+                        }else{
+
+                            Toast loginmal =
+                                    Toast.makeText(getApplicationContext(),("Usuari i/o contrasenya incorrectes"), Toast.LENGTH_SHORT);
+
+                            loginmal.show();
+
+                        }
+
 
 
 

@@ -16,6 +16,8 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.google.android.gms.location.LocationRequest;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -45,6 +47,7 @@ public class GeoLocalizacion extends Service {
 
     private LocationListener listener;
     private LocationManager lM;
+    private LocationRequest lR;
 
     double altitud, latitud;
     String date;
@@ -65,7 +68,10 @@ public class GeoLocalizacion extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        enableLocationUpdates();
         listener = new LocationListener() {
+
+
 
             @Override
             public void onLocationChanged(Location location) {
@@ -101,7 +107,7 @@ public class GeoLocalizacion extends Service {
             }
 
             private String devolverHora(){
-                DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date ahorita = Calendar.getInstance().getTime();
                 return df.format(ahorita);
             }
@@ -115,6 +121,27 @@ public class GeoLocalizacion extends Service {
         lM.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, listener);
 
     }
+
+
+
+
+    private void enableLocationUpdates() {
+
+        lR = new LocationRequest();
+        lR.setInterval(30000);
+        lR.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+
+    }
+
+
+
+
+
+
+
+
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -133,7 +160,7 @@ public class GeoLocalizacion extends Service {
             boolean result = true;
             HttpClient httpC= new DefaultHttpClient();//Hay que ir con ojo que esta deprecated
 
-            //HttpPost httpP = new HttpPost("http://192.168.120.81:8080/WebClientRest/webresources/generic");
+            HttpPost httpP = new HttpPost("http://192.168.120.81:8080/WebClientRest/webresources/generic");
             httpP.setHeader("content-type", "application/json");//Ojo deprecated
 
             try{

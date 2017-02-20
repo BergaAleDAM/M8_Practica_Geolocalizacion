@@ -5,5 +5,6 @@
     <string name="botonAcceder">Acceder</string>
     <string name="botonSalir">Salir</string>
     <string name="geolocalizacion">Geolocalizacion</string>
+    <string name="cerrar_servicio">Cerrar Servicio</string>
 
 </resources>

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 BaseDatos bd = new BaseDatos(this, "Autobuseros", null, 2);
                 SQLiteDatabase sql= bd.getWritableDatabase();
 
-                Cursor c = sql.rawQuery("SELECT * FROM Otobuses WHERE ? != id_bus AND ? != contrasena", dades);
+                Cursor c = sql.rawQuery("SELECT * FROM Otobuses WHERE ? = id_bus AND ? = contrasena", dades);
 
                 if (c.moveToFirst()) {
                     do {
@@ -70,8 +70,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
 
-
-
+            case R.id.acabar:
+                
+                stopService( new Intent(getApplicationContext(), GeoLocalizacion.class));
+                 break;
         }
 
 
@@ -92,8 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         EditText matri = (EditText) findViewById(R.id.matri);
         EditText user = (EditText) findViewById(R.id.user);
-        String usuario = user.toString();
-        String matricula = matri.toString();
+        String usuario = user.getText().toString();
+        String matricula = matri.getText().toString();
 
         return  new String[] {usuario, matricula};
     }

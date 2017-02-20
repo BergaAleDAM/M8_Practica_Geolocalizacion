@@ -38,7 +38,8 @@ import java.util.Date;
 
 import javax.sql.ConnectionEventListener;
 
-import static com.google.android.gms.internal.b.df;
+import static java.lang.String.valueOf;
+
 
 /**
  * Created by ALUMNEDAM on 15/02/2017.
@@ -52,6 +53,7 @@ public class GeoLocalizacion extends Service {
     double altitud, latitud;
     String date;
     String matricula;
+
 
 
     public GeoLocalizacion() {}
@@ -78,8 +80,8 @@ public class GeoLocalizacion extends Service {
 
                 WService ws = new WService();
 
-
-                String latitud = String.valueOf(location.getLatitude()),altitud = String.valueOf(location.getLongitude());
+                latitud = location.getLatitude();
+                altitud = location.getLongitude();
 
                 //Toast.makeText(GeoLocalizacion.this, "" + localizacion, Toast.LENGTH_SHORT).show();
 
@@ -136,18 +138,11 @@ public class GeoLocalizacion extends Service {
 
 
 
-
-
-
-
-
-
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "Servicio iniciado", Toast.LENGTH_SHORT).show();
         matricula = intent.getStringExtra("matricula");
-        Toast.makeText(this, ""+matricula, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, matricula, Toast.LENGTH_SHORT).show();
         return super.onStartCommand(intent, flags, startId);
     }
 

@@ -11,6 +11,15 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     *
+     * Este método onCreate inicia la aplicacion instanciando una nueva base de datos
+     * y un botón que nos servirá para acceder al servicio de la aplicacion y para parar el servicio
+     * que se va a ejecutar
+     *
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,12 +30,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button entrar = (Button) findViewById(R.id.acceder);
         entrar.setOnClickListener(this);
-
-
-
+        Button acabar = (Button) findViewById(R.id.acabar);
+        acabar.setOnClickListener(this);
 
     }
 
+    /**
+     *
+     * El método onClick implementado de View.onclickListener y distinguimos entre  un botón y el otro
+     * si le damos al boton de acceder creará una base de datos puramente comparativa que servirá
+     * para hacer una comparación del login del usuario para ver si ha metido bien los datos del
+     * autobus 1111A
+     *
+     *
+     * En caso que t.odo coincida se mandará un intent a la clase de geolocalizacion y en caso negativo
+     * imprimira por pantalla un mensaje conforme que no se ha entrado y no ejecutará el servicio
+     *
+     *
+     * @param view
+     */
 
     @Override
     public void onClick(View view) {
@@ -71,25 +93,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             case R.id.acabar:
-                
+
                 stopService( new Intent(getApplicationContext(), GeoLocalizacion.class));
                  break;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
+
+    /**
+     *
+     * Este método declara las variables necesarias para el funcionamiento de la aplicación
+     *
+     * @return
+     */
     private String[] declararVariables() {
 
         EditText matri = (EditText) findViewById(R.id.matri);

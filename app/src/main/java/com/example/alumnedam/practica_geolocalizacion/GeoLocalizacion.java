@@ -42,7 +42,7 @@ import static java.lang.String.valueOf;
 
 
 /**
- * Created by ALUMNEDAM on 15/02/2017.
+ * Creamos la clase Geolocalización que será un servicio e instanciamos las variabes necesarias
  */
 public class GeoLocalizacion extends Service {
 
@@ -55,7 +55,10 @@ public class GeoLocalizacion extends Service {
     String matricula;
 
 
-
+    /**
+     *
+     * Declaramos como siempre un constructor vacío
+     */
     public GeoLocalizacion() {}
 
 
@@ -68,6 +71,11 @@ public class GeoLocalizacion extends Service {
 
     @SuppressWarnings("MissingPermission")
     @Override
+    /**
+     *
+     * En el onCreate decimos que actualize una posición cada x tiempo y añadimos un listener para el serivico
+     *
+     */
     public void onCreate() {
         super.onCreate();
         enableLocationUpdates();
@@ -76,6 +84,12 @@ public class GeoLocalizacion extends Service {
 
 
             @Override
+            /**
+             *
+             * Este metodo sobrescrito ejecuta el web service de la aplicacion de java y pasará los
+             * valores actales de la altura y la aplitud del sitio donde estamos junto con la hora actual
+             *
+             */
             public void onLocationChanged(Location location) {
 
                 WService ws = new WService();
@@ -125,8 +139,12 @@ public class GeoLocalizacion extends Service {
     }
 
 
-
-
+    /**
+     *
+     * Este metodo hace que cada 30 segundos haga un locationRequest paara la base de datos
+     *
+     *
+     */
     private void enableLocationUpdates() {
 
         lR = new LocationRequest();
@@ -139,6 +157,11 @@ public class GeoLocalizacion extends Service {
 
 
     @Override
+    /**
+     *
+     * Este metodo indica que el servicio se ha iniciado
+     *
+     */
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "Servicio iniciado", Toast.LENGTH_SHORT).show();
         matricula = intent.getStringExtra("matricula");
@@ -146,6 +169,17 @@ public class GeoLocalizacion extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
+    /**
+     *
+     * Esta clase asíncrona genera un cliente web que eejecutará el post para meter los valores
+     * que vayamos recogiendo mediante punteros de objetors JSON
+     *
+     * Comprueba si se han metido los valores que iremos intentando meter con un try junto con los catch
+     * para las exceptiones y devolverá si el método mete valores o no en forma de boolean
+     *
+     *
+     *
+     */
     private class WService extends AsyncTask<Void, Void, Boolean> {
 
         public WService() {}
@@ -190,8 +224,12 @@ public class GeoLocalizacion extends Service {
         }
 
 
-
-
+        /**
+         * Una vez se haya ejecutado el DoInBackground dirá si se ha marcado el sitio o no
+         *
+         *
+         * @param result
+         */
         @Override
         protected void onPostExecute(Boolean result) {
 
